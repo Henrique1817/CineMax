@@ -1,5 +1,11 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                        Página de carrinho de compras                        */
+/* Garante gestão de itens, cupons e checkout antes da finalização do pedido.  */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências principais ---------------------- */
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -9,6 +15,7 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 
 export default function CartPage() {
+  /* --------------------------- Hooks globais utilizados -------------------- */
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const {
@@ -31,10 +38,12 @@ export default function CartPage() {
   const convenienceFee = getConvenienceFee();
   const total = getTotal();
 
+  /* ------------------------------ Estados locais --------------------------- */
   const [couponCode, setCouponCode] = useState('');
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
   const [isProcessingCheckout, setIsProcessingCheckout] = useState(false);
 
+  /* ------------------------- Aplicação de cupom seguro -------------------- */
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) return;
 
@@ -49,6 +58,7 @@ export default function CartPage() {
     setIsApplyingCoupon(false);
   };
 
+  /* ------------------------ Entrypoint para o checkout -------------------- */
   const handleCheckout = async () => {
     if (!isAuthenticated) {
       const goToLogin = confirm('Você precisa estar logado para finalizar a compra. Deseja fazer login?');
@@ -94,6 +104,7 @@ export default function CartPage() {
     }
   };
 
+  /* --------------------------- Estado vazio do carrinho ------------------- */
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 pt-16">
@@ -115,6 +126,7 @@ export default function CartPage() {
     );
   }
 
+  /* ------------------------------ Interface principal --------------------- */
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

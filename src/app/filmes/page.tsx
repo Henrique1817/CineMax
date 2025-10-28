@@ -1,5 +1,11 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                        Página de listagem de filmes                         */
+/* Permite pesquisar, filtrar e navegar entre os títulos em cartaz.            */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências e dados -------------------------- */
 import { useState, useEffect } from 'react';
 import { FaSearch, FaFilter } from 'react-icons/fa';
 import { MOVIES_DATABASE, MOVIE_GENRES, MovieDataUtils } from '@/data/movies';
@@ -7,6 +13,7 @@ import { Movie } from '@/types';
 import MovieCard from '@/components/ui/MovieCard';
 
 export default function MoviesPage() {
+  /* ------------------------------ Estados locais --------------------------- */
   const [movies, setMovies] = useState<Movie[]>(MOVIES_DATABASE.current);
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>(MOVIES_DATABASE.current);
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,6 +21,7 @@ export default function MoviesPage() {
   const [selectedRating, setSelectedRating] = useState('all');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  /* ------------------------ Atualização reativa dos filtros ---------------- */
   useEffect(() => {
     const filtered = MovieDataUtils.filterMovies(movies, {
       search: searchTerm,
@@ -23,6 +31,7 @@ export default function MoviesPage() {
     setFilteredMovies(filtered);
   }, [searchTerm, selectedGenre, selectedRating, movies]);
 
+  /* ----------------------------- Manipuladores UI -------------------------- */
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
@@ -42,6 +51,7 @@ export default function MoviesPage() {
     setSelectedRating('all');
   };
 
+  /* ------------------------------ Camadas visuais ------------------------- */
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

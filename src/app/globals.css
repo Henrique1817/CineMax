@@ -1,8 +1,13 @@
+/* -------------------------------------------------------------------------- */
+/*                         Estilos globais do CineMax                          */
+/* Organiza camadas Tailwind e extensões utilitárias usadas em todo o app.     */
+/* -------------------------------------------------------------------------- */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles for CineMax */
+/* ------------------------------ Ajustes de base ---------------------------- */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -13,6 +18,7 @@
   }
 }
 
+/* --------------------------- Componentes utilitários ----------------------- */
 @layer components {
   .btn {
     @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform;
@@ -43,6 +49,7 @@
   }
 }
 
+/* ------------------------------ Utilitários extra --------------------------- */
 @layer utilities {
   .scrollbar-hide {
     -ms-overflow-style: none;

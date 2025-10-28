@@ -1,16 +1,25 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                          Cartão individual de filme                         */
+/* Renderiza capa, metadados e ações rápidas para cada item na vitrine.        */
+/* -------------------------------------------------------------------------- */
+
+/* ------------------------------ Dependências UI ----------------------------- */
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaStar, FaClock, FaPlay } from 'react-icons/fa';
 import { Movie } from '@/types';
 
+/* ------------------------------- Tipagem local ------------------------------ */
 interface MovieCardProps {
   movie: Movie;
   priority?: boolean;
 }
 
+/* -------------------------- Componente principal --------------------------- */
 export default function MovieCard({ movie, priority = false }: MovieCardProps) {
+  /* ---------------------- Estrutura visual do cartão ----------------------- */
   return (
     <div className="group relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
       {/* Poster Image */}

@@ -1,5 +1,11 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                      Página de programação de sessões                       */
+/* Permite filtrar filmes em cartaz por data e reproduz horários disponíveis.  */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências e dados -------------------------- */
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -8,14 +14,17 @@ import { FaClock, FaStar, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { MOVIES_DATABASE, MovieDataUtils } from '@/data/movies';
 
 export default function SchedulePage() {
+  /* ------------------------- Estado derivado da URL ------------------------ */
   const searchParams = useSearchParams();
   const selectedMovieId = searchParams.get('filme');
   
+  /* ------------------------------ Estados locais --------------------------- */
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [selectedMovie, setSelectedMovie] = useState<number | null>(
     selectedMovieId ? parseInt(selectedMovieId) : null
   );
   
+  /* --------------------------- Coleção de filmes ativos -------------------- */
   const moviesInTheater = MOVIES_DATABASE.current.filter(movie => movie.isInTheater);
   
   // Gerar próximos 7 dias
@@ -28,10 +37,12 @@ export default function SchedulePage() {
   // Horários padrão para exibição
   const showtimes = ['14:00', '16:30', '19:00', '21:30'];
 
+  /* -------------------------- Lista filtrada final ------------------------ */
   const filteredMovies = selectedMovie 
     ? moviesInTheater.filter(movie => movie.id === selectedMovie)
     : moviesInTheater;
 
+  /* ------------------------------ Template visual ------------------------- */
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

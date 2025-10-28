@@ -1,12 +1,20 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                          Página de promoções do app                         */
+/* Destaca cupons, ofertas especiais e orienta o usuário a aplicá-los.         */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências e dados -------------------------- */
 import { useState } from 'react';
 import { FaGift, FaPercent, FaTicketAlt, FaCopy, FaCheck, FaTags, FaCalendarAlt, FaUsers } from 'react-icons/fa';
 import { AVAILABLE_COUPONS } from '@/data/movies';
 
 export default function PromotionsPage() {
+  /* ------------------------------ Estados locais --------------------------- */
   const [copiedCoupon, setCopiedCoupon] = useState<string | null>(null);
 
+  /* ----------------------- Catálogo de promoções mockadas ------------------ */
   const promotions = [
     {
       id: 1,
@@ -70,6 +78,7 @@ export default function PromotionsPage() {
     }
   ];
 
+  /* ---------------------- Ofertas extras fora dos cupons ------------------- */
   const specialOffers = [
     {
       title: 'Segunda-feira Maluca',
@@ -91,6 +100,7 @@ export default function PromotionsPage() {
     }
   ];
 
+  /* ------------------------ Utilitário para copiar cupom ------------------- */
   const handleCopyCoupon = async (code: string) => {
     try {
       await navigator.clipboard.writeText(code);
@@ -101,6 +111,7 @@ export default function PromotionsPage() {
     }
   };
 
+  /* ------------------------------ Renderização UI -------------------------- */
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

@@ -1,5 +1,11 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                    Página de detalhes individuais do filme                  */
+/* Exibe sinopse, trailer e permite comprar ingressos para o título escolhido. */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências e dados -------------------------- */
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -9,6 +15,7 @@ import MovieThemePlayer from '@/components/audio/MovieThemePlayer';
 import { useCart } from '@/context/CartContext'; 
 
 export default function MovieDetailsPage() {
+  /* ----------------------- Resolução de parâmetros e hooks ----------------- */
   const params = useParams();
   const router = useRouter();
   const { addItem } = useCart();
@@ -16,10 +23,12 @@ export default function MovieDetailsPage() {
   const movieId = parseInt(params.id as string);
   const movie = MovieDataUtils.getMovieById(movieId);
   
+  /* ------------------------------ Estados locais --------------------------- */
   const [selectedShowtime, setSelectedShowtime] = useState('');
   const [selectedSeats, setSelectedSeats] = useState(1);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
 
+  /* ------------------- Conversão resiliente de URL do trailer -------------- */
   const getYouTubeEmbedUrl = (url?: string): string | null => {
     if (!url) return null;
     try {
@@ -61,6 +70,7 @@ export default function MovieDetailsPage() {
     }
   };
 
+  /* ---------------------------- Fallback quando não há filme --------------- */
   if (!movie) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-16">
@@ -77,6 +87,7 @@ export default function MovieDetailsPage() {
     );
   }
 
+  /* ------------------------------ Ação comprar ingressos ------------------- */
   const handleBuyTickets = () => {
     if (!selectedShowtime) {
       alert('Por favor, selecione um horário');
@@ -97,6 +108,7 @@ export default function MovieDetailsPage() {
     }
   };
 
+  /* ------------------------------ Estrutura visual ------------------------- */
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       {/* Movie theme audio (plays if configured in movie data) */}

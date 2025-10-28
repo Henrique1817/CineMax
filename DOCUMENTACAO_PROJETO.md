@@ -1,7 +1,17 @@
 # 🎬 CineMax - Documentação do Projeto
 
 ## 📋 Visão Geral
-O **CineMax** é um sistema de cinema desenvolvido em **Next.js 14** com **TypeScript** e **Tailwind CSS**. O projeto permite que usuários naveguem por filmes, vejam detalhes, façam reservas de ingressos e gerenciem um carrinho de compras.
+O **CineMax** é um sistema de cinema desenvolvido em **Next.js 14** com **TypeScript** e **Tailwind CSS**. A aplicação permite que usuários naveguem por filmes, assistam trailers incorporados do YouTube, ouçam trilhas sonoras temáticas, façam reservas de ingressos e gerenciem um carrinho de compras com persistência local.
+
+### 🛠️ Tecnologias Principais
+- **Next.js 14 (App Router)**: Roteamento baseado em arquivos, renderização híbrida e otimizações de build.
+- **React 18 + Hooks**: Composição da interface declarativa e gerenciamento de estado local.
+- **TypeScript**: Tipagem estática para interfaces de domínio (filmes, carrinho, usuários).
+- **Tailwind CSS + tailwind-merge + clsx**: Estilização por utilitários, resolução de classes conflitantes e montagem condicional.
+- **Context API (Auth, Cart, Audio)**: Estados globais compartilhados entre páginas e componentes.
+- **Next Image/Link**: Otimização de imagens e navegação SPA.
+- **React Icons**: Ícones SVG reutilizáveis.
+- **localStorage**: Persistência de autenticação, carrinho e configurações de áudio.
 
 ## 🏗️ Arquitetura do Projeto
 
@@ -12,9 +22,11 @@ projeto_n1_next/
 ├── 📁 src/                      # Código fonte principal
 │   ├── 📁 app/                  # App Router (Next.js 14)
 │   ├── 📁 components/           # Componentes reutilizáveis
+│   │   ├── 📁 audio/            # Controles e players de trilha sonora
 │   ├── 📁 context/              # Gerenciamento de estado global
 │   ├── 📁 data/                 # Dados mockados e utilitários
 │   └── 📁 types/                # Definições TypeScript
+├── 🎵 public/mp3/               # Trilhas sonoras temáticas dos filmes
 ├── ⚙️ next.config.js           # Configurações do Next.js
 ├── 📦 package.json             # Dependências e scripts
 └── 🎨 tailwind.config.ts       # Configurações do Tailwind
@@ -42,6 +54,12 @@ Menu → Rota selecionada → Página correspondente → Componentes renderizado
 ### 4. **Carrinho** (`CartContext`)
 ```
 Adicionar filme → Validações → LocalStorage → Estado Global → Contador atualizado
+```
+
+### 5. **Trailers e Trilhas Sonoras** (`MovieThemePlayer` & iframe YouTube)
+```
+Página do Filme → Botão Play → URL convertida para embed → YouTube iframe com autoplay
+Página do Filme → Dados do filme → AudioContext → Trilha sonora carrega e toca → Controles globais disponíveis
 ```
 
 ---
@@ -84,8 +102,9 @@ Adicionar filme → Validações → LocalStorage → Estado Global → Contador
 // Função: Layout principal da aplicação
 - Metadados SEO
 - Fonte Inter do Google
-- Providers globais (Auth + Cart)
+- Providers globais (Auth + Cart + Audio)
 - Estrutura HTML base
+- Controles globais de áudio renderizados em todas as páginas
 ```
 
 #### `page.tsx` - Página Inicial
@@ -123,10 +142,11 @@ Adicionar filme → Validações → LocalStorage → Estado Global → Contador
 ```tsx
 // Função: Página individual do filme
 - Informações completas do filme
-- Trailer incorporado
+- Trailer incorporado via YouTube (embed automático)
 - Horários disponíveis
 - Botão "Adicionar ao Carrinho"
 - Breadcrumb de navegação
+- MovieThemePlayer para tocar a trilha sonora configurada no banco de dados
 ```
 
 #### `programacao/page.tsx` - Programação de Horários
@@ -245,6 +265,24 @@ Adicionar filme → Validações → LocalStorage → Estado Global → Contador
 - Badge de classificação etária
 ```
 
+#### **Áudio** (`audio/`)
+
+##### `AudioControls.tsx` - Controles Globais de Áudio
+```tsx
+// Função: Exibe player flutuante com play/pause, stop, mute e volume
+- Disponível em todo o site quando há trilha sonora ativa
+- Interage com o AudioContext para controlar o elemento `<audio>` global
+- Usa ícones do react-icons para feedback visual
+```
+
+##### `MovieThemePlayer.tsx` - Player de Trilha por Filme
+```tsx
+// Função: Toca automaticamente a trilha sonora definida para cada filme
+- Dispara play ao montar e stop ao desmontar a página
+- Recebe configuração (src, volume, loop) diretamente dos dados do filme
+- Facilita adicionar novas trilhas sem alterar a lógica da página
+```
+
 ---
 
 ### 🔧 **Gerenciamento de Estado** (`src/context/`)
@@ -290,6 +328,21 @@ Estado Global:
 - totalQuantity: number
 ```
 
+#### `AudioContext.tsx` - Contexto de Trilha Sonora
+```tsx
+// Função: Gerencia reprodução de áudio global
+Funcionalidades:
+- playMovieTheme(movieId, src, opts): garante um único `<audio>` controlado
+- stopCurrentTrack(): pausa e reseta a trilha atual
+- togglePlay(), toggleMute(), setVolume(): expõem controles para UI
+- Persistência opcional de volume (pode ser adicionada futuramente)
+
+Estado Global:
+- currentTrackId: identifica qual filme está tocando
+- isPlaying: status do player
+- volume / isMuted: configuração atual de áudio
+```
+
 ---
 
 ### 📊 **Dados e Tipos** (`src/data/` e `src/types/`)
@@ -301,6 +354,7 @@ Conteúdo:
 - MOVIES_DATABASE: Filmes atuais e próximos lançamentos
 - AVAILABLE_COUPONS: Cupons de desconto disponíveis
 - MOVIE_GENRES: Lista de gêneros para filtros
+- AUDIO: cada filme pode definir `audio.theme`, `volume`, `loop` para habilitar trilha
 
 Utilitários (MovieDataUtils):
 - getMovieById(id): Busca filme por ID
@@ -308,13 +362,14 @@ Utilitários (MovieDataUtils):
 - filterMovies(movies, filters): Aplica filtros
 - getMoviesByGenre(genre): Filtra por gênero
 - getFeaturedMovies(): Retorna filmes em destaque
+- getMoviesWithAudio(): Helper que centraliza filmes com trilhas configuradas
 ```
 
 #### `types/index.ts` - Definições TypeScript
 ```typescript
 // Função: Contratos de dados da aplicação
 Interfaces Principais:
-- Movie: Estrutura de um filme
+- Movie: Estrutura de um filme (inclui `audio?` com `theme`, `volume`, `loop`)
 - CartItem: Item no carrinho
 - User: Dados do usuário
 - Order: Pedido de compra
@@ -396,6 +451,27 @@ npm start           # Servidor de produção
 # Qualidade de Código
 npm run lint        # ESLint
 npm run type-check  # Verificação TypeScript
+```
+
+---
+
+## 🎧 **Gerenciamento de Trilhas Sonoras e Trailers**
+
+### Trilhas Sonoras
+```text
+1. Salve o arquivo de áudio em `public/mp3/` (ex.: `interestelar.mp3`).
+2. No `movies.ts`, adicione a propriedade `audio` ao filme:
+	audio: { theme: '/mp3/interestelar.mp3', volume: 0.45, loop: true }
+3. Ao acessar a página do filme, o `MovieThemePlayer` monta e toca a trilha.
+4. Os controles globais `AudioControls` permitem pausar/mutar o áudio em qualquer rota.
+```
+
+### Trailers do YouTube
+```text
+1. Defina `trailer` no filme com a URL do YouTube (aceita formatos watch, youtu.be ou embed).
+2. A página de detalhes converte automaticamente para o formato embed.
+3. O iframe é carregado apenas ao clicar no botão play, economizando banda.
+4. Autoplay, `modestbranding` e `rel=0` já vêm configurados para uma experiência limpa.
 ```
 
 ---

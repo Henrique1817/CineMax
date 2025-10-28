@@ -1,9 +1,16 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                      Sessão de promoções resumidas na home                  */
+/* Apresenta cupons populares e incentiva navegação para mais ofertas.         */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências e dados -------------------------- */
 import Link from 'next/link';
 import { FaGift, FaPercent, FaTicketAlt } from 'react-icons/fa';
 
 export default function PromotionsSection() {
+  /* ----------------------------- Catálogo mockado ------------------------- */
   const promotions = [
     {
       id: 1,

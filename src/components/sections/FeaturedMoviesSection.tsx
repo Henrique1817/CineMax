@@ -1,12 +1,20 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                         Sessão de filmes em destaque                        */
+/* Lista primeiros títulos em cartaz e oferece acesso rápido à vitrine.        */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências e dados -------------------------- */
 import Link from 'next/link';
 import { MOVIES_DATABASE } from '@/data/movies';
 import MovieCard from '@/components/ui/MovieCard';
 
 export default function FeaturedMoviesSection() {
+  /* --------------------------- Seleção de filmes ativos ------------------- */
   const featuredMovies = MOVIES_DATABASE.current.slice(0, 6);
 
+  /* ------------------------------ Renderização UI ------------------------- */
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

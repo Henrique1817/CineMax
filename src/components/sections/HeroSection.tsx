@@ -1,14 +1,22 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                         Carrossel hero da página inicial                    */
+/* Faz rotação automática de filmes em destaque e exibe CTA principais.        */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências e dados -------------------------- */
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FaPlay, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { MovieDataUtils } from '@/data/movies';
 
 export default function HeroSection() {
+  /* ------------------------------ Estados locais --------------------------- */
   const [currentSlide, setCurrentSlide] = useState(0);
   const featuredMovies = MovieDataUtils.getFeaturedMovies();
 
+  /* --------------------------- Rotação automática ------------------------- */
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % featuredMovies.length);
@@ -17,6 +25,7 @@ export default function HeroSection() {
     return () => clearInterval(interval);
   }, [featuredMovies.length]);
 
+  /* ----------------------------- Navegação manual ------------------------- */
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % featuredMovies.length);
   };
@@ -29,6 +38,7 @@ export default function HeroSection() {
     setCurrentSlide(index);
   };
 
+  /* ----------------------------- Tratamento vazio ------------------------- */
   if (featuredMovies.length === 0) {
     return (
       <section className="h-96 bg-gray-900 flex items-center justify-center">
@@ -42,6 +52,7 @@ export default function HeroSection() {
 
   const currentMovie = featuredMovies[currentSlide];
 
+  /* ---------------------------- Layout principal -------------------------- */
   return (
     <section className="relative h-screen overflow-hidden">
       {/* Background Image with Overlay */}

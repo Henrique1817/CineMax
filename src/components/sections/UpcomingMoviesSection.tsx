@@ -1,12 +1,20 @@
 'use client';
 
+/* -------------------------------------------------------------------------- */
+/*                       Sessão de próximos lançamentos na home               */
+/* Destaca filmes futuros e direciona o usuário para a página "em breve".     */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Dependências e dados -------------------------- */
 import Link from 'next/link';
 import { MOVIES_DATABASE } from '@/data/movies';
 import MovieCard from '@/components/ui/MovieCard';
 
 export default function UpcomingMoviesSection() {
+  /* -------------------------- Seleção de lançamentos futuros --------------- */
   const upcomingMovies = MOVIES_DATABASE.upcoming.slice(0, 4);
 
+  /* ------------------------------ Estrutura renderizada -------------------- */
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

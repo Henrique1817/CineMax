@@ -28,6 +28,9 @@ Thumbs.db
 # Logs
 *.log
 
+# Arquivos de Teste
+.test-results/
+
 # Runtime data
 pids
 *.pid

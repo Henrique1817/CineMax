@@ -9,6 +9,7 @@ export const MOVIES_DATABASE = {
       duration: "181 min",
       rating: 8.4,
       poster: "/images/ultimato.svg",
+      background: "/images/ultimato_bg.svg",
       description: "Os heróis mais poderosos da Terra enfrentam o Thanos em uma batalha épica pelo destino do universo.",
       year: 2019,
       director: "Anthony Russo, Joe Russo",
@@ -30,6 +31,7 @@ export const MOVIES_DATABASE = {
       duration: "169 min",
       rating: 8.6,
       poster: "/images/interestelar.svg",
+      background: "/images/interestelar_bg.svg",
       description: "Um grupo de exploradores viaja através de um buraco de minhoca no espaço na tentativa de garantir a sobrevivência da humanidade.",
       year: 2014,
       director: "Christopher Nolan",
@@ -51,6 +53,7 @@ export const MOVIES_DATABASE = {
       duration: "134 min",
       rating: 7.3,
       poster: "/images/pantera.svg",
+      background: "/images/pantera_bg.svg",
       description: "T'Challa retorna para casa para a isolada e tecnologicamente avançada nação africana de Wakanda para servir como novo líder de seu país.",
       year: 2018,
       director: "Ryan Coogler",
@@ -72,6 +75,7 @@ export const MOVIES_DATABASE = {
       duration: "148 min",
       rating: 5.7,
       poster: "/images/matrix.svg",
+      background: "/images/matrix_bg.svg",
       description: "Neo vive uma vida aparentemente comum sob sua identidade original como Thomas A. Anderson em San Francisco.",
       year: 2021,
       director: "Lana Wachowski",
@@ -88,6 +92,7 @@ export const MOVIES_DATABASE = {
       duration: "155 min",
       rating: 8.0,
       poster: "/images/duna.svg",
+      background: "/images/duna_bg.svg",
       description: "Paul Atreides, um jovem brilhante e talentoso nascido com um grande destino além de sua compreensão, deve viajar para o planeta mais perigoso do universo.",
       year: 2021,
       director: "Denis Villeneuve",
@@ -104,6 +109,7 @@ export const MOVIES_DATABASE = {
       duration: "148 min",
       rating: 8.2,
       poster: "/images/homem_aranha.svg",
+      background: "/images/homem_aranha_bg.svg",
       description: "Peter Parker busca a ajuda do Doutor Estranho para fazer com que sua identidade secreta seja esquecida novamente.",
       year: 2021,
       director: "Jon Watts",
@@ -120,6 +126,7 @@ export const MOVIES_DATABASE = {
       duration: "131 min",
       rating: 8.3,
       poster: "/images/top_gun.svg",
+      background: "/images/top_gun_bg.svg",
       description: "Depois de mais de 30 anos de serviço como um dos principais aviadores da Marinha, Pete 'Maverick' Mitchell está de volta.",
       year: 2022,
       director: "Joseph Kosinski",
@@ -136,6 +143,7 @@ export const MOVIES_DATABASE = {
       duration: "126 min",
       rating: 6.9,
       poster: "/images/doutor_estranho.svg",
+      background: "/images/doutor_estranho_bg.svg",
       description: "O Doutor Estranho desperta o Multiverso e, com a ajuda de aliados místicos tanto antigos quanto novos, atravessa as realidades alternativas.",
       year: 2022,
       director: "Sam Raimi",
@@ -147,6 +155,7 @@ export const MOVIES_DATABASE = {
     }
   ] as Movie[],
   
+  // Filmes que serão lançados em breve
   upcoming: [
     {
       id: 9,
@@ -155,6 +164,7 @@ export const MOVIES_DATABASE = {
       duration: "190 min",
       rating: 0,
       poster: "/images/avatar.svg",
+      background: "/images/avatar_bg.svg",
       description: "Jake Sully e Ney'tiri continuam sua jornada épica em Pandora com novas aventuras aquáticas.",
       year: 2025,
       director: "James Cameron",
@@ -171,6 +181,7 @@ export const MOVIES_DATABASE = {
       duration: "125 min",
       rating: 0,
       poster: "/images/thor.svg",
+      background: "/images/thor_bg.svg",
       description: "Thor embarca em uma nova jornada cósmica com Jane Foster como a Poderosa Thor.",
       year: 2025,
       director: "Taika Waititi",
@@ -187,6 +198,7 @@ export const MOVIES_DATABASE = {
       duration: "140 min",
       rating: 0,
       poster: "/images/galaxia.svg",
+      background: "/images/galaxia_bg.svg",
       description: "Os Guardiões enfrentam novos desafios cósmicos em uma aventura emocionante.",
       year: 2025,
       director: "James Gunn",
@@ -203,6 +215,7 @@ export const MOVIES_DATABASE = {
       duration: "150 min",
       rating: 0,
       poster: "/images/blade_runner.svg",
+      background: "/images/blade_runner_bg.svg",
       description: "Uma nova história no universo Blade Runner, explorando o futuro da humanidade.",
       year: 2025,
       director: "Denis Villeneuve",
@@ -236,6 +249,7 @@ export const MOVIE_GENRES = [
   'Animação'
 ];
 
+// Utilitários para manipulação de dados de filmes, trailers e filtros
 export const MovieDataUtils = {
   getMovieById: (id: number): Movie | undefined => {
     return [...MOVIES_DATABASE.current, ...MOVIES_DATABASE.upcoming].find(movie => movie.id === id);

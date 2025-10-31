@@ -73,7 +73,7 @@ export default function MovieDetailsPage() {
   /* ---------------------------- Fallback quando não há filme --------------- */
   if (!movie) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-16">
+      <div className="min-h-screen flex items-center justify-center pt-16"> 
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Filme não encontrado</h1>
           <button
@@ -120,17 +120,16 @@ export default function MovieDetailsPage() {
           loop={movie.audio.loop ?? true}
         />
       )}
-      {/* Hero Section */}
-      <div className="relative h-96 bg-black">
+  {/* Hero Section */}
+  <div className="relative h-80 sm:h-96 md:h-[28rem] lg:h-[32rem] bg-black">
         <Image
-          src={movie.poster}
+          src={movie.background ?? movie.poster}
           alt={movie.title}
           fill
           className="object-cover opacity-60"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-        
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />        
         <div className="absolute bottom-8 left-0 right-0">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-end space-x-6">
@@ -164,7 +163,7 @@ export default function MovieDetailsPage() {
         </div>
       </div>
 
-      {/* Content */}
+      {/* Content, significa informações detalhadas sobre o filme */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
@@ -192,7 +191,7 @@ export default function MovieDetailsPage() {
               </div>
             </div>
 
-            {/* Cast */}
+            {/* Cast, elenco de apoio */}
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Elenco Principal</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -233,7 +232,7 @@ export default function MovieDetailsPage() {
             )}
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar, informações adicionais */}
           <div className="space-y-6">
             {/* Ticket Booking */}
             {movie.isInTheater ? (
@@ -265,7 +264,7 @@ export default function MovieDetailsPage() {
                   </select>
                 </div>
 
-                {/* Number of Seats */}
+                {/* Number of Seats, quantidade de ingressos */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Quantidade de Ingressos
@@ -275,7 +274,7 @@ export default function MovieDetailsPage() {
                     onChange={(e) => setSelectedSeats(parseInt(e.target.value))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   >
-                    {[1, 2, 3, 4, 5, 6].map((num) => (
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                       <option key={num} value={num}>{num} ingresso{num > 1 ? 's' : ''}</option>
                     ))}
                   </select>

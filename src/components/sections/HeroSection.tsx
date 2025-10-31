@@ -59,7 +59,7 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <div
           className="w-full h-full bg-cover bg-center bg-no-repeat transition-all duration-1000"
-          style={{ backgroundImage: `url(${currentMovie.poster})` }}
+          style={{ backgroundImage: `url(${currentMovie.background ?? currentMovie.poster})` }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-60" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />

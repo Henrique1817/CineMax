@@ -21,6 +21,8 @@ export interface Movie { // Interface significa um filme
   duration: string;
   rating: number;
   poster: string;
+  /** Imagem ampla para fundos/hero; usar path do public (ex.: /images/foo_bg.svg) */
+  background?: string;
   description: string;
   year: number;
   director: string;
